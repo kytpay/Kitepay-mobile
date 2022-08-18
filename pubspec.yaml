@@ -1,0 +1,100 @@
+name: kitepay
+description: A new Flutter project.
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.1+2
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  #ui
+  cupertino_icons: ^1.0.2
+  shimmer: ^2.0.0
+  introduction_screen: ^3.0.0
+  carousel_slider: ^4.0.0
+  gradient_widgets: ^0.6.0
+  neopop: ^1.0.2
+  flutter_neumorphic: ^3.2.0
+
+  #state management
+  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^2.0.0-dev.0
+
+  #data
+  hive_flutter: ^1.1.0
+
+  #threading
+
+  #Crypto
+  solana: ^0.24.0
+
+  #Firebase
+  firebase_core: ^1.17.0
+  firebase_crashlytics: ^2.8.0
+  firebase_performance: ^0.8.0+12
+
+  #Nearby messages
+  #flutter_nearby_messages_api: ^0.0.8
+
+  #NFC
+  nfc_emulator: ^2.0.0-nullsafety.0
+
+  #utilies
+  uni_links: ^0.5.1
+  intl: ^0.17.0
+  cached_network_image: ^3.2.0
+  qr_code_scanner: ^0.6.1
+  qr_flutter: ^4.0.0
+  pretty_qr_code: ^2.0.2
+  flutter_svg: ^1.0.3
+  google_fonts: ^2.3.1
+  internet_connection_checker:
+  #local_auth: ^1.1.11
+  font_awesome_flutter: ^9.2.0
+  url_launcher: ^6.0.20
+  path_provider:
+  share_plus: ^4.0.1
+  gallery_saver: ^2.3.2
+  permission_handler: ^9.2.0
+  provider: ^6.0.3
+
+dev_dependencies:
+  flutter_native_splash: ^2.1.1
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons:
+    git:
+      url: https://github.com/Davenchy/flutter_launcher_icons.git
+      ref: fixMinSdkParseFlutter2.8
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/square_icon_white.png"
+
+  flutter_lints: ^1.0.0
+
+flutter_native_splash:
+  image: "assets/transparent_icon.png"
+  color: "#1d363e"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/svg/
+    - assets/png/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/poppins/Poppins-Regular.ttf
+        - asset: fonts/poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: fonts/poppins/Poppins-Medium.ttf
+        - asset: fonts/poppins/Poppins-Italic.ttf
+          style: italic
