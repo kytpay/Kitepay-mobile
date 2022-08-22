@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kitepay/components/material_key.dart';
 import 'package:kitepay/home/home_screen.dart';
+import 'package:kitepay/network/base_account.dart';
+import 'package:kitepay/network/wallet_account.dart';
+import 'package:kitepay/payments/utilities/uri_pay.dart';
 import 'package:kitepay/profile/profile_page.dart';
 import 'package:kitepay/provider/states.dart';
 import 'package:kitepay/transtactions/transactions_page.dart';
+import 'package:kitepay/utilies/nfc/NdefRecordInfo.dart';
 import 'package:kitepay/utilies/const/color_constant.dart';
-import 'package:kitepay/utilies/method_channel.dart';
-import 'package:kitepay/utilies/nfc.dart';
+import 'package:kitepay/utilies/nfc/nfc.dart';
 import 'package:kitepay/utilies/url_launch.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,10 +25,6 @@ class HomePage extends HookConsumerWidget {
     final selectedAccount = ref.watch(selectedAccountProvider);
     final accounts = ref.watch(accountsProvider).values.toList();
     final textTheme = Theme.of(context).textTheme;
-
-    //Initialize NFC
-    NfcMethodChannel().configureChannel(ref);
-    NFC.enableNfc();
 
     final Widget page;
 
@@ -58,15 +59,24 @@ class HomePage extends HookConsumerWidget {
         page = HomeScreen(selectedAccount!);
     }
 
+    //Initialize NFC
+
+    NFC.setup(ref);
+    NFC.enableNfc();
+    //NfcMethodChannel().configureChannel(ref);
+    //NFC.enableNfc();
+
+    // NFC.enableNfc(ref);
+
     // List of items in our dropdown menu
     var dropDownItems = ["Get support", "Send feedback"];
 
     //final nearbyCheckBox = useState(false);
 
     // init NearbyMessagesApi
-   // FlutterNearbyMessagesApi nearbyMessagesApi = FlutterNearbyMessagesApi();
+    // FlutterNearbyMessagesApi nearbyMessagesApi = FlutterNearbyMessagesApi();
 
-     // This callback gets the message when an a nearby device sends one
+    // This callback gets the message when an a nearby device sends one
     // nearbyMessagesApi.onFound = (message) {
     //   print('~~~onFound : $message');
     //   uriPay(context, selectedAccount as WalletAccount, message);
@@ -103,8 +113,8 @@ class HomePage extends HookConsumerWidget {
     //   print('~~~ microphonePermissionErrorHandler');
     // };
 
-
     return Scaffold(
+      key: AppNavigation.homeScaffoldKey,
       appBar: AppBar(
         toolbarHeight: kToolbarHeight,
         leading: Builder(builder: (context) {
@@ -331,6 +341,77 @@ class HomePage extends HookConsumerWidget {
       ),
     );
   }
+
+  static Future<void> nfcInit(BuildContext context, Account account) async {
+    if (await NfcManager.instance.isAvailable()) {
+      // Start Session
+      NfcManager.instance.startSession(
+        onDiscovered: (NfcTag tag) async {
+          Ndef? ndef = Ndef.from(tag);
+          if (ndef != null) {
+            var ndefMessage = ndef.cachedMessage;
+
+            if (ndefMessage != null) {
+              print(ndefMessage);
+
+              var record = ndefMessage.records[0];
+              var recordText = NdefRecordInfo.fromNdef(record).subtitle;
+              print(recordText);
+
+              uriPay(context, account as WalletAccount, recordText);
+            }
+          }
+        },
+      );
+    }
+  }
+  // NFCAvailability availability;
+  // try {
+  //   availability = await FlutterNfcKit.nfcAvailability;
+  // } on PlatformException {
+  //   availability = NFCAvailability.not_supported;
+  // }
+  // if (availability == NFCAvailability.available) {
+  //   var tag = await FlutterNfcKit.poll(timeout: Duration(minutes: 10));
+
+  //   //print(jsonEncode(tag));
+  //   // if (tag.type == NFCTagType.iso7816) {
+  //   //   var result = await FlutterNfcKit.transceive("00B0950000",
+  //   //       timeout: Duration(
+  //   //           seconds:
+  //   //               5)); // timeout is still Android-only, persist until next change
+  //   //   print(result);
+  //   // }
+
+  //   // read NDEF records if available
+  //   if (tag.ndefAvailable ?? false) {
+  //     /// decoded NDEF records (see [ndef.NDEFRecord] for details)
+  //     /// `UriRecord: id=(empty) typeNameFormat=TypeNameFormat.nfcWellKnown type=U uri=https://github.com/nfcim/ndef`
+  //     for (var record in await FlutterNfcKit.readNDEFRecords(cached: false)) {
+  //       print(record.toString());
+  //       if (record is ndef.TextRecord) {
+  //         var recordText = record.text;
+  //         if (recordText != null && recordText.length > 0) print(recordText);
+  //         uriPay(context, account as WalletAccount, recordText!);
+  //       }
+  //     }
+
+  //     // var ndefRecords = await FlutterNfcKit.readNDEFRecords();
+  //     // var ndefRecord = ndefRecords[0];
+  //     // if (ndefRecord is ndef.TextRecord) {
+  //     //   print(ndefRecord.text ?? "Empty");
+  //     // }
+  //     // var ndefString = '';
+
+  //     // for (int i = 0; i < ndefRecords.length; i++) {
+  //     //   ndefString += '${i + 1}: ${ndefRecords[i]}\n';
+  //     // }
+
+  //     // print("NDEF $ndefString");
+  //     // jsonEncode(ndefString);
+  //   }
+  // }
+  //  }
 
   // Future<void> setupNearby(FlutterNearbyMessagesApi nearbyMessagesApi) async {
   //   await nearbyMessagesApi

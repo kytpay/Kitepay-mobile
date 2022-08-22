@@ -9,7 +9,6 @@ import 'package:kitepay/network/wallet_account.dart';
 
 class EditAccountPage extends StatefulWidget {
   final bool editAccounts = false;
-  final String editButtonText = 'Edit';
   final Account account;
 
   EditAccountPage(this.account);

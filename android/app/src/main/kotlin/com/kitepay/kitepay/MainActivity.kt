@@ -20,22 +20,29 @@ import com.kitepay.kitepay.nfc.NdefParser
 class MainActivity : FlutterActivity() {
 
     private var nfcAdapter: NfcAdapter? = null
-    private val TAG = "NfcEmulator-MainActivity"
+    private val TAG = "Nfc-MainActivity"
     private val NFC_NDEF_KEY = "ndefMessage"
     private val CHANNEL = "org.kitepay.app.emulator"
     private lateinit var methodChannel: MethodChannel
 
 //    private val channel: MethodChannel by lazy { MethodChannel(flutterView, "hce") }
 //
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        GeneratedPluginRegister.registerGeneratedPlugins(FlutterEngine(this));
-//        flutterView.addFirstFrameListener {
-//            if (intent.hasExtra("success")) {
-//                onHCEResult(intent)
-//            }
-//        }
-//    }
+   override fun onCreate(savedInstanceState: Bundle?) {
+       super.onCreate(savedInstanceState)
+       Log.d(TAG, "onCreate")
+   }
+
+     override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+      //  enableNfc()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+      //  disableNfc()
+    }
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -124,6 +131,12 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+      //  handleIntent(intent)
+    }
+
     private fun handleIntent(intent: Intent) {
         if (intent.action == NfcAdapter.ACTION_NDEF_DISCOVERED) {
             checkNdefMessage(intent)
@@ -155,18 +168,14 @@ class MainActivity : FlutterActivity() {
 
         val message = builder.toString()
         if (message.isNotEmpty()) {
+            Log.d("Message: ", message)
             methodChannel.invokeMethod("onNfcRead", message)
         } else {
             Log.d(TAG, "Received empty NDEFMessage")
         }
     }
 
-//    override fun onNewIntent(intent: Intent) {
-//        super.onNewIntent(intent)
-//        if (intent?.hasExtra("success") == true) {
-//            onHCEResult(intent)
-//        }
-//    }
+   
 
 //    private fun onHCEResult(intent: Intent) = intent.getBooleanExtra("success", false).let { success ->
 //        channel.invokeMethod("onHCEResult", success)

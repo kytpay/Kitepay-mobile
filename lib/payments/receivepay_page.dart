@@ -8,7 +8,7 @@ import 'package:kitepay/payments/utilities/pay_validator.dart';
 import 'package:kitepay/network/base_account.dart';
 import 'package:kitepay/provider/states.dart';
 import 'package:kitepay/utilies/const/color_constant.dart';
-import 'package:kitepay/utilies/nfc.dart';
+import 'package:kitepay/utilies/nfc/nfc.dart';
 import 'package:kitepay/utilies/solanapay.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:kitepay/profile/profile_page.dart';
@@ -20,8 +20,18 @@ class ReceivePayPage extends HookConsumerWidget {
 
   ReceivePayPage(this.account);
 
+
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(
+      () {
+        NFC.disableNfc();
+        return () => {NFC.enableNfc()};
+      },
+      [],
+    );
+
     List<Token> tokens = getReceivableTokens();
 
     final amount = useState<String>("");
@@ -209,15 +219,10 @@ Future<void> payReceiveButtomSheet(
 
   String transactionDeepLink = transaction.toDeepLink();
 
-  // init NearbyMessagesApi
-  // FlutterNearbyMessagesApi nearbyMessagesApi = FlutterNearbyMessagesApi();
-
-  // await nearbyMessagesApi.setAPIKey('AIzaSyCOTfX3ENbfNA-Rq22kqK-HVKaVGNDTnG4');
-
-  // await nearbyMessagesApi.publish(transactionUri);
-
+  // Stop Session
+  //await NFC.disableNfc();
   //nfc emulator
-  NFC.startNfcEmulator(transactionUri);
+  await NFC.startNfcEmulator(transactionUri);
 
   GlobalKey repaintGlobalKey = GlobalKey();
 
@@ -365,7 +370,11 @@ Future<void> payReceiveButtomSheet(
         );
       });
     },
-  ).whenComplete(() => NFC.stopNfcEmulator());
+  ).whenComplete(
+    () async {
+      await NFC.stopNfcEmulator();
+    },
+  );
 }
 
 // Future<String> DynamicLink(String transactionlink) async {

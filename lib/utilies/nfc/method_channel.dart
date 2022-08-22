@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kitepay/components/material_key.dart';
 import 'package:kitepay/network/wallet_account.dart';
 import 'package:kitepay/payments/utilities/uri_pay.dart';
-import 'const/string_constant.dart';
+import '../const/string_constant.dart';
 import 'package:kitepay/provider/states.dart';
 
 class NfcMethodChannel {
@@ -20,7 +20,6 @@ class NfcMethodChannel {
   }
 
   Future<void> methodHandler(MethodCall call) async {
-
     switch (call.method) {
       case "onNfcRead": // this method name needs to be the same from invokeMethod in Android
         String message = call.arguments["message"];

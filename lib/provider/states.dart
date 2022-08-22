@@ -7,9 +7,12 @@ import 'package:kitepay/settings/utilities/network_selector.dart';
 import 'package:kitepay/utilies/tracker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kitepay/network/wallet_account.dart';
-// import 'package:provider/provider.dart';
 
 final appLoadedProvider = StateProvider<bool>((_) {
+  return false;
+});
+
+final isNfcEnabled = StateProvider<bool>((_) {
   return false;
 });
 
