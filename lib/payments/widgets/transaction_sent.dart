@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kitepay/network/network_client.dart';
-import 'package:kitepay/settings/settings.dart';
 import 'package:kitepay/utilies/const/color_constant.dart';
+import 'package:kitepay/utilies/url_launch.dart';
 import 'package:solana/dto.dart' show Commitment;
 
 import '../../network/base_account.dart';
@@ -156,7 +156,7 @@ Widget viewTransaction(
               }
           }
           ;
-          openURL(
+          LaunchURL.openURL(
               context, 'https://solscan.io/tx/' + sign + '?cluster=' + network);
         },
         child: Text(
