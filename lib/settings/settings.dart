@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kitepay/settings/widgets/logout_dialog.dart';
 import 'package:kitepay/utilies/const/color_constant.dart';
-
-import 'package:url_launcher/url_launcher.dart';
+import 'package:kitepay/utilies/url_launch.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -77,11 +76,11 @@ class SettingsPageState extends ConsumerState<SettingsPage> {
                     trailing: IconButton(
                       icon: Icon(Icons.call_made_outlined),
                       onPressed: () {
-                        openURL(context, 'https://twitter.com/kytpay');
+                        LaunchURL.openURL(context, 'https://twitter.com/kytpay');
                       },
                     ),
                     onTap: () {
-                      openURL(context, 'https://twitter.com/kytpay');
+                      LaunchURL.openURL(context, 'https://twitter.com/kytpay');
                     },
                   ),
                   Divider(
@@ -94,11 +93,11 @@ class SettingsPageState extends ConsumerState<SettingsPage> {
                     trailing: IconButton(
                       icon: Icon(Icons.call_made_outlined),
                       onPressed: () {
-                        openURL(context, 'https://kytpay.medium.com/');
+                        LaunchURL.openURL(context, 'https://kytpay.medium.com/');
                       },
                     ),
                     onTap: () {
-                      openURL(context, 'https://kytpay.medium.com/');
+                      LaunchURL.openURL(context, 'https://kytpay.medium.com/');
                     },
                   ),
                 ],
@@ -116,12 +115,12 @@ class SettingsPageState extends ConsumerState<SettingsPage> {
                     trailing: IconButton(
                       icon: Icon(Icons.call_made_outlined),
                       onPressed: () {
-                        openURL(context,
+                        LaunchURL.openURL(context,
                             'https://kitepay.org/privacy-policy.html');
                       },
                     ),
                     onTap: () {
-                      openURL(context,
+                      LaunchURL.openURL(context,
                           'https://kitepay.org/privacy-policy.html');
                     },
                   ),
@@ -135,12 +134,12 @@ class SettingsPageState extends ConsumerState<SettingsPage> {
                     trailing: IconButton(
                       icon: Icon(Icons.call_made_outlined),
                       onPressed: () {
-                        openURL(context,
+                        LaunchURL.openURL(context,
                             'https://pinnate-salt-274.notion.site/Terms-Conditions-72a785ac93a94cd9b97ba6fb8d60b3fd');
                       },
                     ),
                     onTap: () {
-                      openURL(context,
+                      LaunchURL.openURL(context,
                           'https://pinnate-salt-274.notion.site/Terms-Conditions-72a785ac93a94cd9b97ba6fb8d60b3fd');
                     },
                   ),
@@ -154,12 +153,12 @@ class SettingsPageState extends ConsumerState<SettingsPage> {
                     trailing: IconButton(
                       icon: Icon(Icons.call_made_outlined),
                       onPressed: () {
-                        openURL(context,
+                        LaunchURL.openURL(context,
                             'mailto:kitepayments@gmail.com?subject=Kitepay🪁 customer support');
                       },
                     ),
                     onTap: () {
-                      openURL(context,
+                      LaunchURL.openURL(context,
                           'mailto:kitepayments@gmail.com?subject=Kitepay🪁 customer support');
                     },
                   ),
@@ -173,12 +172,12 @@ class SettingsPageState extends ConsumerState<SettingsPage> {
                     trailing: IconButton(
                       icon: Icon(Icons.call_made_outlined),
                       onPressed: () {
-                        openURL(context,
+                        LaunchURL.openURL(context,
                             'https://pinnate-salt-274.notion.site/Open-Source-Licenses-cdff0e26a25b4738a82f53410014f7a9');
                       },
                     ),
                     onTap: () {
-                      openURL(context,
+                      LaunchURL.openURL(context,
                           'https://pinnate-salt-274.notion.site/Open-Source-Licenses-cdff0e26a25b4738a82f53410014f7a9');
                     },
                   ),
@@ -209,16 +208,16 @@ class SettingsPageState extends ConsumerState<SettingsPage> {
   }
 }
 
-void openURL(BuildContext context, String url) async {
-  bool canOpen = await canLaunch(url);
+// void openURL(BuildContext context, String url) async {
+//   bool canOpen = await canLaunch(url);
 
-  if (canOpen) {
-    await launch(url);
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Could not open the URL"),
-      ),
-    );
-  }
-}
+//   if (canOpen) {
+//     await launch(url);
+//   } else {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       const SnackBar(
+//         content: Text("Could not open the URL"),
+//       ),
+//     );
+//   }
+// }

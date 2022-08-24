@@ -16,6 +16,18 @@ class TransactionSolanaPay {
     this.splToken,
   });
 
+  static bool validate(String uriSolanaPay) {
+    Uri uri = Uri.parse(uriSolanaPay);
+    var scheme = uri.scheme;
+    var path = uri.path;
+    print("URI: $uri Scheme: $scheme path: $path");
+    // ignore: unnecessary_null_comparison
+    if (uri.scheme == 'solana' && uri.path != null) {
+      return true;
+    }
+    return false;
+  }
+
   /// Deserialize a Solana Pay uri
   static TransactionSolanaPay parseUri(String uriSolanaPay) {
     Uri uri = Uri.parse(uriSolanaPay);
