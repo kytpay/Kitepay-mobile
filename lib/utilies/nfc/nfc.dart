@@ -11,9 +11,11 @@ class NFC {
   static const MethodChannel _channel =
       const MethodChannel("org.kitepay.app.emulator");
   static late WidgetRef homeRef;
+  static var nfcAvailable = NfcManager.instance.isAvailable();
 
-  static void setup(WidgetRef ref) {
+  static Future<void> setup(WidgetRef ref) async {
     print("Function: setupNfc");
+   // nfcAvailable = await NfcManager.instance.isAvailable();
     homeRef = ref;
   }
 
@@ -24,7 +26,7 @@ class NFC {
     print("Function: enableNfc");
     // await _channel.invokeMethod("enableNfc");
 
-    if (await NfcManager.instance.isAvailable()) {
+    if (await nfcAvailable) {
       // Start Session
       NfcManager.instance.startSession(
         onDiscovered: (NfcTag tag) async {
@@ -56,7 +58,9 @@ class NFC {
   static Future<void> disableNfc() async {
     print("Function: disableNfc");
     // await _channel.invokeMethod("disableNfc");
-    await NfcManager.instance.stopSession();
+    if (await nfcAvailable) {
+      await NfcManager.instance.stopSession();
+    }
   }
 
   /*
@@ -64,7 +68,9 @@ class NFC {
    */
   static Future<void> startNfcEmulator(String text) async {
     print("Function: startNfcEmulator");
-    await _channel.invokeMethod('startNfcEmulator', {"text": text});
+    if (await nfcAvailable) {
+      await _channel.invokeMethod('startNfcEmulator', {"text": text});
+    }
   }
 
   /*
@@ -72,6 +78,8 @@ class NFC {
    */
   static Future<void> stopNfcEmulator() async {
     print("Function: stopNfcEmulator");
-    await _channel.invokeMethod('stopNfcEmulator');
+    if (await nfcAvailable) {
+      await _channel.invokeMethod('stopNfcEmulator');
+    }
   }
 }

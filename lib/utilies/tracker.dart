@@ -63,6 +63,7 @@ class TokenTrackers {
 
   Future<void> loadTokenList() async {
     var tokensFile = await rootBundle.loadString('assets/tokens_list.json');
+    // ignore: unnecessary_null_comparison
     if (tokensFile != null) {
       Map tokensListJson = json.decode(tokensFile);
       for (final token in tokensListJson["tokens"]) {
