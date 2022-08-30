@@ -76,7 +76,9 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/square_icon_white.png"
+  image_path: "assets/transparent_app_logo.png"
+  adaptive_icon_foreground: "assets/transparent_app_logo.png"
+  adaptive_icon_background: "#ffffff"
 
   flutter_lints: ^1.0.0
 
