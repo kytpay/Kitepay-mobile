@@ -26,6 +26,8 @@ class HomePage extends HookConsumerWidget {
     final accounts = ref.watch(accountsProvider).values.toList();
     final textTheme = Theme.of(context).textTheme;
 
+    AppNavigation.homeScaffoldKey = new GlobalKey<ScaffoldState>();
+
     final Widget page;
 
     final currentPage = useState(0);
@@ -71,48 +73,6 @@ class HomePage extends HookConsumerWidget {
     // List of items in our dropdown menu
     var dropDownItems = ["Get support", "Send feedback"];
 
-    //final nearbyCheckBox = useState(false);
-
-    // init NearbyMessagesApi
-    // FlutterNearbyMessagesApi nearbyMessagesApi = FlutterNearbyMessagesApi();
-
-    // This callback gets the message when an a nearby device sends one
-    // nearbyMessagesApi.onFound = (message) {
-    //   print('~~~onFound : $message');
-    //   uriPay(context, selectedAccount as WalletAccount, message);
-    // };
-
-    // This callback gets the message when a nearby device leaves
-    // nearbyMessagesApi.onLost = (message) {
-    //   print('~~~onLost : $message');
-    // };
-
-    // // Listen status when publish and subscribe
-    // // enum GNSOperationStatus { inactive, starting, active }
-    // nearbyMessagesApi.statusHandler = (status) {
-    //   print('~~~statusHandler : $status');
-    // };
-
-    // // Use your messages to nearby permission alert
-    // nearbyMessagesApi.setPermissionAlert(
-    //     'Your title', 'Your message', 'Deny', 'Grant');
-
-    // nearbyMessagesApi.permissionHandler = (status) {
-    //   print(status);
-    // };
-
-    // nearbyMessagesApi.bluetoothPowerErrorHandler = (args) {
-    //   print('~~~ bluetoothPowerErrorHandler');
-    // };
-
-    // nearbyMessagesApi.bluetoothPermissionErrorHandler = (args) {
-    //   print('~~~ bluetoothPermissionErrorHandler');
-    // };
-
-    // nearbyMessagesApi.microphonePermissionErrorHandler = (args) {
-    //   print('~~~ microphonePermissionErrorHandler');
-    // };
-
     return Scaffold(
       key: AppNavigation.homeScaffoldKey,
       appBar: AppBar(
@@ -124,60 +84,6 @@ class HomePage extends HookConsumerWidget {
           );
         }),
         actions: [
-          // IconButton(
-          //     onPressed: () {
-          //       nearbyCheckBox.value ^= true;
-          //       print(nearbyCheckBox.value);
-          //       if (nearbyCheckBox.value == true) {
-          //         nearbyMessagesApi.backgroundSubscribe();
-          //       } else if (nearbyCheckBox.value == false) {
-          //         // backgroundUnsubscribe
-          //         nearbyMessagesApi.backgroundUnsubscribe();
-          //       } else {}
-          //     },
-          //     icon: Icon(Icons.nfc, size: kToolbarHeight - 25)),
-          // Checkbox(
-          //     value: nearbyCheckBox.value,
-          //     onChanged: (value) {
-          //       print(value);
-          //       if (value == "true") {
-          //         nearbyMessagesApi.backgroundSubscribe();
-
-          //         // This callback gets the message when an a nearby device sends one
-          //         nearbyMessagesApi.onFound = (message) {
-          //           print('~~~onFound : $message');
-          //           uriPay(context, selectedAccount as WalletAccount, message);
-          //         };
-
-          //         nearbyCheckBox.value ^= true;
-          //         print(value);
-          //       } else if (value == "false") {
-          //         // backgroundUnsubscribe
-          //         nearbyMessagesApi.backgroundUnsubscribe();
-          //         nearbyCheckBox.value ^= true;
-          //       } else {}
-          //     }),
-          // NeumorphicCheckbox(
-          //     value: nearbyCheckBox.value,
-          // onChanged: (value) {
-          //   print(value);
-          //   if (value == "true") {
-          //     nearbyMessagesApi.backgroundSubscribe();
-
-          //     // This callback gets the message when an a nearby device sends one
-          //     nearbyMessagesApi.onFound = (message) {
-          //       print('~~~onFound : $message');
-          //       uriPay(context,
-          //           selectedAccount as WalletAccount, message);
-          //     };
-
-          //     nearbyCheckBox.value = false;
-          //   } else if (value == "false") {
-          //     // backgroundUnsubscribe
-          //     nearbyMessagesApi.backgroundUnsubscribe();
-          //     nearbyCheckBox.value = true;
-          //   } else {}
-          // }),
           DropdownButton(
             icon: Icon(Icons.help_outline, size: kToolbarHeight - 23),
             iconEnabledColor: kWhiteColor,
@@ -365,87 +271,4 @@ class HomePage extends HookConsumerWidget {
       );
     }
   }
-  // NFCAvailability availability;
-  // try {
-  //   availability = await FlutterNfcKit.nfcAvailability;
-  // } on PlatformException {
-  //   availability = NFCAvailability.not_supported;
-  // }
-  // if (availability == NFCAvailability.available) {
-  //   var tag = await FlutterNfcKit.poll(timeout: Duration(minutes: 10));
-
-  //   //print(jsonEncode(tag));
-  //   // if (tag.type == NFCTagType.iso7816) {
-  //   //   var result = await FlutterNfcKit.transceive("00B0950000",
-  //   //       timeout: Duration(
-  //   //           seconds:
-  //   //               5)); // timeout is still Android-only, persist until next change
-  //   //   print(result);
-  //   // }
-
-  //   // read NDEF records if available
-  //   if (tag.ndefAvailable ?? false) {
-  //     /// decoded NDEF records (see [ndef.NDEFRecord] for details)
-  //     /// `UriRecord: id=(empty) typeNameFormat=TypeNameFormat.nfcWellKnown type=U uri=https://github.com/nfcim/ndef`
-  //     for (var record in await FlutterNfcKit.readNDEFRecords(cached: false)) {
-  //       print(record.toString());
-  //       if (record is ndef.TextRecord) {
-  //         var recordText = record.text;
-  //         if (recordText != null && recordText.length > 0) print(recordText);
-  //         uriPay(context, account as WalletAccount, recordText!);
-  //       }
-  //     }
-
-  //     // var ndefRecords = await FlutterNfcKit.readNDEFRecords();
-  //     // var ndefRecord = ndefRecords[0];
-  //     // if (ndefRecord is ndef.TextRecord) {
-  //     //   print(ndefRecord.text ?? "Empty");
-  //     // }
-  //     // var ndefString = '';
-
-  //     // for (int i = 0; i < ndefRecords.length; i++) {
-  //     //   ndefString += '${i + 1}: ${ndefRecords[i]}\n';
-  //     // }
-
-  //     // print("NDEF $ndefString");
-  //     // jsonEncode(ndefString);
-  //   }
-  // }
-  //  }
-
-  // Future<void> setupNearby(FlutterNearbyMessagesApi nearbyMessagesApi) async {
-  //   await nearbyMessagesApi
-  //       .setAPIKey('AIzaSyCOTfX3ENbfNA-Rq22kqK-HVKaVGNDTnG4');
-
-  //   // This callback gets the message when a nearby device leaves
-  //   nearbyMessagesApi.onLost = (message) {
-  //     print('~~~onLost : $message');
-  //   };
-
-  //   // Listen status when publish and subscribe
-  //   // enum GNSOperationStatus { inactive, starting, active }
-  //   nearbyMessagesApi.statusHandler = (status) {
-  //     print('~~~statusHandler : $status');
-  //   };
-
-  //   // Use your messages to nearby permission alert
-  //   nearbyMessagesApi.setPermissionAlert(
-  //       'Your title', 'Your message', 'Deny', 'Grant');
-
-  //   nearbyMessagesApi.permissionHandler = (status) {
-  //     print(status);
-  //   };
-
-  //   nearbyMessagesApi.bluetoothPowerErrorHandler = (args) {
-  //     print('~~~ bluetoothPowerErrorHandler');
-  //   };
-
-  //   nearbyMessagesApi.bluetoothPermissionErrorHandler = (args) {
-  //     print('~~~ bluetoothPermissionErrorHandler');
-  //   };
-
-  //   nearbyMessagesApi.microphonePermissionErrorHandler = (args) {
-  //     print('~~~ microphonePermissionErrorHandler');
-  //   };
-  // }
 }

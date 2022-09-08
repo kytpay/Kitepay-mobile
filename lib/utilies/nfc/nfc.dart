@@ -15,7 +15,7 @@ class NFC {
 
   static Future<void> setup(WidgetRef ref) async {
     print("Function: setupNfc");
-   // nfcAvailable = await NfcManager.instance.isAvailable();
+    // nfcAvailable = await NfcManager.instance.isAvailable();
     homeRef = ref;
   }
 
