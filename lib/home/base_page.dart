@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kitepay/components/material_key.dart';
-import 'package:kitepay/home/home_screen.dart';
+import 'package:kitepay/home/home_page.dart';
 import 'package:kitepay/network/base_account.dart';
 import 'package:kitepay/network/wallet_account.dart';
 import 'package:kitepay/payments/utilities/uri_pay.dart';
 import 'package:kitepay/profile/profile_page.dart';
 import 'package:kitepay/provider/states.dart';
 import 'package:kitepay/transtactions/transactions_page.dart';
+import 'package:kitepay/utilies/const/ui_constant.dart';
 import 'package:kitepay/utilies/nfc/NdefRecordInfo.dart';
 import 'package:kitepay/utilies/const/color_constant.dart';
 import 'package:kitepay/utilies/nfc/nfc.dart';
@@ -16,17 +17,21 @@ import 'package:kitepay/utilies/url_launch.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
-class HomePage extends HookConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+class BasePage extends HookConsumerWidget {
+  const BasePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('HomePage');
+    print('BasePage');
     final selectedAccount = ref.watch(selectedAccountProvider);
     final accounts = ref.watch(accountsProvider).values.toList();
     final textTheme = Theme.of(context).textTheme;
 
-    AppNavigation.homeScaffoldKey = new GlobalKey<ScaffoldState>();
+    //UI Constant initialization
+    UIConstants.ScreenHeight = MediaQuery.of(context).size.height;
+    UIConstants.ScreenWidth = MediaQuery.of(context).size.width;
+
+    AppNavigation.baseScaffoldKey = new GlobalKey<ScaffoldState>();
 
     final Widget page;
 
@@ -40,7 +45,7 @@ class HomePage extends HookConsumerWidget {
     }
     switch (currentPage.value) {
       case 0:
-        page = HomeScreen(selectedAccount!);
+        page = HomePage(selectedAccount!);
         break;
 
       case 1:
@@ -58,15 +63,12 @@ class HomePage extends HookConsumerWidget {
         break;
 
       default:
-        page = HomeScreen(selectedAccount!);
+        page = HomePage(selectedAccount!);
     }
 
     //Initialize NFC
-
     NFC.setup(ref);
     NFC.enableNfc();
-    //NfcMethodChannel().configureChannel(ref);
-    //NFC.enableNfc();
 
     // NFC.enableNfc(ref);
 
@@ -74,7 +76,7 @@ class HomePage extends HookConsumerWidget {
     var dropDownItems = ["Get support", "Send feedback"];
 
     return Scaffold(
-      key: AppNavigation.homeScaffoldKey,
+      key: AppNavigation.baseScaffoldKey,
       appBar: AppBar(
         toolbarHeight: kToolbarHeight,
         leading: Builder(builder: (context) {

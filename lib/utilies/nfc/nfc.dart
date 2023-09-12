@@ -42,7 +42,7 @@ class NFC {
               print(recordText);
 
               uriPay(
-                  AppNavigation.homeScaffoldKey.currentContext!,
+                  AppNavigation.baseScaffoldKey.currentContext!,
                   homeRef.read(selectedAccountProvider) as WalletAccount,
                   recordText);
             }

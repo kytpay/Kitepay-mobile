@@ -14,11 +14,10 @@ import 'package:kitepay/utilies/solanapay.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:kitepay/profile/profile_page.dart';
 
-
-class ReceivePayPage extends HookConsumerWidget {
+class TiplinkPage extends HookConsumerWidget {
   final Account account;
 
-  ReceivePayPage(this.account);
+  TiplinkPage(this.account);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -217,6 +216,8 @@ Future<void> payReceiveButtomSheet(
 
   String transactionDeepLink = transaction.toDeepLink();
 
+  // Stop Session
+  //await NFC.disableNfc();
   //nfc emulator
   await NFC.startNfcEmulator(transactionUri);
 

@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kitepay/components/material_key.dart';
 import 'package:kitepay/firebase_options.dart';
-import 'package:kitepay/home/home.dart';
+import 'package:kitepay/home/base_page.dart';
 import 'package:kitepay/network/wallet_account.dart';
 import 'package:kitepay/payments/utilities/uri_pay.dart';
 import 'package:kitepay/settings/manage_accounts.dart';
@@ -78,7 +78,7 @@ class App extends HookConsumerWidget {
       ),
       initialRoute: loggedIn == 'true' ? '/home' : '/onboarding_page',
       routes: {
-        '/home': (_) => HomePage(),
+        '/home': (_) => BasePage(),
         '/create_wallet': (_) => CreateWallet(),
         '/import_wallet': (_) => ImportWallet(),
         '/onboarding_page': (_) => OnBoardingPage(),

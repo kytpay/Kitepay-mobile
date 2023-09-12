@@ -28,7 +28,9 @@ dependencies:
   #data
   hive_flutter: ^1.1.0
 
-  #threading
+  #JS interlop
+  flutter_js: any
+
 
   #Crypto
   solana: ^0.24.0

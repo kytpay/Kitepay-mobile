@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kitepay/components/dialogs/custom_dialogs.dart';
 import 'package:kitepay/payments/widgets/transaction_sent.dart';
-import 'package:kitepay/components/widgets/wrapper_image.dart';
+import 'package:kitepay/components/widgets/TokenIcon.dart';
 import 'package:kitepay/payments/utilities/pay_validator.dart';
 import 'package:kitepay/network/base_account.dart';
 import 'package:kitepay/provider/states.dart';
@@ -84,35 +84,70 @@ class ManuallyPayPage extends HookConsumerWidget {
       appBar: AppBar(
         title: Text('Transfer'),
       ),
-      floatingActionButton: Container(
-        color: kWhiteColor,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            color: kWhiteColor,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
                 ),
+                child: ListTile(
+                  title: Text(
+                    'Pay',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: kWhiteColor),
+                  ),
+                ),
+                onPressed: () {
+                  if (PayValidator.validAddress(context, address)) {
+                    if (PayValidator.validAmount(context, amount)) {
+                      var tx = createTransaction();
+                      paymentButtomSheet(context, tx, hasSufficientFund(tx));
+                    }
+                  }
+                },
               ),
             ),
-            child: ListTile(
-              title: Text(
-                'Pay',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: kWhiteColor),
-              ),
-            ),
-            onPressed: () {
-              if (PayValidator.validAddress(context, address)) {
-                if (PayValidator.validAmount(context, amount)) {
-                  var tx = createTransaction();
-                  paymentButtomSheet(context, tx, hasSufficientFund(tx));
-                }
-              }
-            },
           ),
-        ),
+          Container(
+            color: kWhiteColor,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
+                ),
+                child: ListTile(
+                  title: Text(
+                    'Create Tiplink',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: kWhiteColor),
+                  ),
+                ),
+                onPressed: () {
+                  if (PayValidator.validAddress(context, address)) {
+                    if (PayValidator.validAmount(context, amount)) {
+                      var tx = createTransaction();
+                      tiplinkButtomSheet(context, tx, hasSufficientFund(tx));
+                    }
+                  }
+                },
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
@@ -431,6 +466,166 @@ class ManuallyPayPage extends HookConsumerWidget {
     );
   }
 
+  Future<void> tiplinkButtomSheet(BuildContext context, Transaction transaction,
+      bool hasSufficientFund) async {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.0),
+        ),
+      ),
+      context: context,
+      isScrollControlled: true,
+      builder: (cxt) {
+        return StatefulBuilder(
+            builder: (BuildContext cxt, StateSetter setModalState) {
+          return Wrap(
+            children: [
+              Consumer(
+                builder: (BuildContext cxt, WidgetRef ref, Widget? child) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Confirm Transaction',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Divider(
+                          height: 1,
+                          thickness: 1,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Consumer(
+                          builder: (BuildContext context, WidgetRef ref,
+                              Widget? child) {
+                            return Column(
+                              children: [
+                                transactionItems(
+                                    'Network', ref.watch(selectedNetwork)),
+                                transactionItems("From", transaction.origin),
+                                transactionItems(
+                                    'Token', transaction.token.info.symbol),
+                                transactionItems(
+                                    'Amount', transaction.amount.toString()),
+                                transactionItems('Network Fee', '\$0.0003'),
+                              ],
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: kWhiteColor,
+                                    border: Border.all(
+                                        color: kBackgroundDark10Color),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: GestureDetector(
+                                  onTap: () => Navigator.pop(context),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: const Text(
+                                      'Cancel',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: kBackgroundDark10Color),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: kBackgroundDark10Color,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                    if (await NetworkConnectivity.isConnected(
+                                        snackbar: true)) {
+                                      if (hasSufficientFund) {
+                                        sendTransaction(
+                                            context, ref, account, transaction);
+                                      } else {
+                                        customAlertDialog(
+                                          context,
+                                          Column(
+                                            children: [
+                                              const Padding(
+                                                padding: EdgeInsets.all(15),
+                                                child: Icon(
+                                                  Icons.error_outline_outlined,
+                                                  color: Colors.red,
+                                                  size: 100,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Insufficient funds for the transaction!",
+                                                style: TextStyle(
+                                                    color: kWhiteColor,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: const Text(
+                                      'Confirm',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        //padding for keyboard insert
+                        Padding(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        });
+      },
+    );
+  }
+
   Widget transactionItems(String attribute, String value) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
@@ -476,7 +671,7 @@ class ManuallyPayPage extends HookConsumerWidget {
                   child: SizedBox(
                     height: 50,
                     width: 50,
-                    child: WrapperImage(
+                    child: TokenIcon(
                       token.info.logoUrl,
                       defaultIcon: FontAwesomeIcons.coins,
                     ),
@@ -522,7 +717,7 @@ class ManuallyPayPage extends HookConsumerWidget {
                   child: SizedBox(
                     height: 50,
                     width: 50,
-                    child: WrapperImage(
+                    child: TokenIcon(
                       token.info.logoUrl,
                       defaultIcon: FontAwesomeIcons.coins,
                     ),

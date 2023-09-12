@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class WrapperImage extends StatelessWidget {
+class TokenIcon extends StatelessWidget {
   final String url;
   final IconData defaultIcon;
 
-  const WrapperImage(this.url,
+  const TokenIcon(this.url,
       {Key? key, this.defaultIcon = Icons.no_accounts_outlined})
       : super(key: key);
 

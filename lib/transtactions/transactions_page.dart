@@ -6,30 +6,8 @@ import 'package:kitepay/transtactions/widget/transaction_card_shimmer.dart';
 import 'package:kitepay/network/base_account.dart';
 import 'package:kitepay/provider/states.dart';
 import 'package:kitepay/network/wallet_account.dart';
+import 'package:kitepay/utilies/const/ui_constant.dart';
 import 'package:kitepay/utilies/network_connectivity.dart';
-
-// List getAllBlockNumbers(List<TransactionDetails> txs) {
-//   Map<String, List<TransactionDetails>> blocks = {};
-
-//   for (var tx in txs) {
-//     DateTime date = DateTime.fromMillisecondsSinceEpoch(tx.blockTime * 1000);
-//     String readableDate = dayFormatter.format(date);
-
-//     if (blocks[readableDate] == null) blocks[readableDate] = [];
-
-//     blocks[readableDate]!.add(tx);
-//   }
-
-//   List<dynamic> items = [];
-
-//   for (var entry in blocks.entries) {
-//     items.add(entry.key);
-
-//     items.addAll(entry.value);
-//   }
-
-//   return items;
-// }
 
 class AccountTransactions extends HookConsumerWidget {
   final Account account;
@@ -54,7 +32,7 @@ class AccountTransactions extends HookConsumerWidget {
       key: key,
       padding: const EdgeInsets.all(8),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height,
+        height: UIConstants.ScreenHeight,
         child: RefreshIndicator(
           key: Key(account.address),
           onRefresh: () async {

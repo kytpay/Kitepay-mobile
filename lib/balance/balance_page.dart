@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kitepay/components/widgets/wrapper_image.dart';
+import 'package:kitepay/components/widgets/TokenIcon.dart';
 import 'package:kitepay/payments/manuallypay_page.dart';
 import 'package:kitepay/network/base_account.dart';
 import 'package:kitepay/provider/states.dart';
@@ -99,7 +99,7 @@ class BalancePage extends HookConsumerWidget {
                 child: SizedBox(
                   height: 50,
                   width: 50,
-                  child: WrapperImage(
+                  child: TokenIcon(
                     token.info.logoUrl,
                     defaultIcon: FontAwesomeIcons.coins,
                   ),

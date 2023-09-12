@@ -6,13 +6,6 @@ import 'package:kitepay/utilies/tracker.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'base_account.dart';
 
-// Master key to encrypt and decrypt mnemonics, aka passphrases, this is included when creating the build
-// final secureKey = Key.fromUtf8(
-//   // ignore: prefer_const_constructors
-//   String.fromEnvironment("secureKey", defaultValue: "SolanaIsLove"),
-// );
-// final iv = IV.fromLength(16);
-
 class WalletAccount extends BaseAccount implements Account {
   // final AccountType accountType = AccountType.Wallet;
 

@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kitepay/network/base_account.dart';
 import 'package:kitepay/payments/manuallypay_page.dart';
 import 'package:kitepay/utilies/const/color_constant.dart';
+import 'package:kitepay/utilies/const/ui_constant.dart';
 import 'package:kitepay/utilies/solanapay.dart';
 import 'package:kitepay/provider/states.dart';
 import 'package:path_provider/path_provider.dart';
@@ -44,7 +45,7 @@ class ProfilePage extends HookConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height,
+        height: UIConstants.ScreenHeight,
         child: RefreshIndicator(
           key: Key(account.address),
           onRefresh: () async {

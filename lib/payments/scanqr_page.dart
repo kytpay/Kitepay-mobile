@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kitepay/utilies/const/ui_constant.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanQrPage extends StatefulWidget {
@@ -15,8 +16,8 @@ class _ScanQrPageState extends State<ScanQrPage> {
 
   @override
   Widget build(BuildContext context) {
-    double scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
+    double scanArea = (UIConstants.ScreenWidth < 400 ||
+            UIConstants.ScreenHeight < 400)
         ? 250.0
         : 300.0;
 
