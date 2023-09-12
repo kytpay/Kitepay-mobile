@@ -116,12 +116,12 @@ class SettingsPageState extends ConsumerState<SettingsPage> {
                       icon: Icon(Icons.call_made_outlined),
                       onPressed: () {
                         LaunchURL.openURL(context,
-                            'https://kitepay.org/privacy-policy.html');
+                            'https://kitepay.org/privacy-policy');
                       },
                     ),
                     onTap: () {
                       LaunchURL.openURL(context,
-                          'https://kitepay.org/privacy-policy.html');
+                          'https://kitepay.org/privacy-policy');
                     },
                   ),
                   Divider(
