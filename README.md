@@ -1,6 +1,29 @@
 # **Kitepay**🪁
 
-## [Click here to Install our App](https://drive.google.com/uc?export=download&id=1iQSMLS2GgZMAmkDitLJXSCDRwSnHSNaf)
-- Make sure developer mode is on in your mobile to test our App 🙌
-- NFC Tap to pay feature only works if both receiver and payer device have NFC support and NFC is turned on
+<img src="https://github.com/kytpay/.github/blob/master/profile/assets/Kitepay.gif" />
 
+## Install The App on Play Store: https://play.google.com/store/apps/details?id=org.kitepay.app
+
+**Step 1:**
+
+Download or clone this repo by using the link below:
+
+```
+https://github.com/kytpay/Kitepay-mobile.git
+```
+
+**Step 2:**
+
+Go to project root and execute the following command in console to get the required dependencies: 
+
+```
+flutter pub get 
+```
+
+**Step 3:**
+
+Execute the following command to run the project:
+
+```
+flutter run
+```
