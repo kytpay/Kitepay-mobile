@@ -1,0 +1,1 @@
+const EMULATOR_CHANNEL = "org.kitepay.app.emulator";
