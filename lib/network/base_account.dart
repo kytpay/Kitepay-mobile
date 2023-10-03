@@ -207,7 +207,7 @@ class BaseAccount {
       const TokenAccountsFilter.byProgramId(TokenProgram.programId),
       commitment: Commitment.confirmed,
       encoding: Encoding.jsonParsed,
-    );
+    ).value;
     //client.rpcClient.getTokenAccountBalance(address);
     //client.rpcClient.getTokenAccountsByDelegate(pubKey, filter);
 
@@ -306,7 +306,7 @@ class BaseAccount {
       );
 
       for (final tx in response) {
-        final message = tx.transaction.message;
+        final message = (tx.transaction as ParsedTransaction).message;
 
         for (final instruction in message.instructions) {
           if (instruction is ParsedInstruction) {
@@ -327,7 +327,7 @@ class BaseAccount {
                           receivedOrSent,
                           SystemProgram.programId,
                           tx.blockTime!,
-                          tx.transaction.signatures.first),
+                          (tx.transaction as ParsedTransaction).signatures.first),
                     );
                   },
                   transferChecked: (_) {},
@@ -373,7 +373,7 @@ class BaseAccount {
                           receivedOrSent,
                           TokenProgram.programId,
                           tx.blockTime!,
-                          tx.transaction.signatures.first),
+                          (tx.transaction as ParsedTransaction).signatures.first),
                     );
                   },
                   transferChecked: (data) {},

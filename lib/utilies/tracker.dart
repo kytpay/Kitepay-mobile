@@ -5,16 +5,6 @@ import 'dart:async';
 import 'package:solana/solana.dart';
 
 /*
- * Types of accounts
- */
-// enum AccountType {
-//   // ignore: constant_identifier_names
-//   Wallet,
-//   // ignore: constant_identifier_names
-//   Client,
-// }
-
-/*
  * Token Tracker
  */
 class Tracker {

@@ -2,7 +2,7 @@ import 'package:kitepay/network/base_account.dart';
 import 'package:kitepay/network/wallet_account.dart';
 import 'package:kitepay/settings/utilities/network_selector.dart';
 import 'package:kitepay/utilies/network_connectivity.dart';
-import 'package:solana/dto.dart' show ProgramAccount;
+import 'package:solana/dto.dart' show FutureContextResultExt, ProgramAccount;
 import 'package:solana/encoder.dart';
 import 'package:solana/solana.dart';
 
@@ -25,7 +25,7 @@ class NetworkClient extends SolanaClient {
     var connection = await NetworkConnectivity.isConnected();
     if(connection){
       balance =
-        await rpcClient.getBalance(address, commitment: Commitment.confirmed);
+        await rpcClient.getBalance(address, commitment: Commitment.confirmed).value;
     }
 
     return balance;

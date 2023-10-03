@@ -30,6 +30,7 @@ bool firstLoad = false;
 // ignore: unused_element
 StreamSubscription? _sub;
 var networkConnected;
+
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -50,7 +51,16 @@ Future<void> main() async {
 
   networkConnected = await NetworkConnectivity.isConnected();
 
-  runApp(const ProviderScope(child: App()));
+  final container = ProviderContainer();
+
+  container
+      .read(loadStateProvider)
+      .SetParams(boxes['accounts'], boxes['settings'], firstLoad);
+
+  runApp(UncontrolledProviderScope(
+    container: container,
+    child: const App(),
+  ));
 }
 
 class App extends HookConsumerWidget {
@@ -58,8 +68,6 @@ class App extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    loadState(
-        boxes['accounts'], boxes['settings'], ref, networkConnected, firstLoad);
 
     _handleIncomingLinks(ref);
     _handleInitialUri(ref);

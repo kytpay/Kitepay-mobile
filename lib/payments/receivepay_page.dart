@@ -271,7 +271,7 @@ Future<void> payReceiveButtomSheet(
                       ),
                       RepaintBoundary(
                         key: repaintGlobalKey,
-                        child: QrImage(
+                        child: QrImageView(
                           data: transactionUri,
                           version: QrVersions.auto,
                           size: 200,
