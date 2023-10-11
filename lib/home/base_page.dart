@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kitepay/components/material_key.dart';
-import 'package:kitepay/home/home_screen.dart';
+import 'package:kitepay/home/home_page.dart';
 import 'package:kitepay/network/base_account.dart';
 import 'package:kitepay/network/wallet_account.dart';
 import 'package:kitepay/payments/utilities/uri_pay.dart';
@@ -16,8 +16,8 @@ import 'package:kitepay/utilies/url_launch.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
-class HomePage extends HookConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+class BasePage extends HookConsumerWidget {
+  const BasePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,13 +34,13 @@ class HomePage extends HookConsumerWidget {
     if (selectedAccount == null) {
       // If the account is loaded and no account is found then open the Account Selection page in order to create or import an account
 
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacementNamed(context, '/onboarding_page');
       });
     }
     switch (currentPage.value) {
       case 0:
-        page = HomeScreen(selectedAccount!);
+        page = HomePage(selectedAccount!);
         break;
 
       case 1:
@@ -58,7 +58,7 @@ class HomePage extends HookConsumerWidget {
         break;
 
       default:
-        page = HomeScreen(selectedAccount!);
+        page = HomePage(selectedAccount!);
     }
 
     //Initialize NFC
@@ -124,7 +124,7 @@ class HomePage extends HookConsumerWidget {
                 alignment: Alignment.topCenter,
                 child: Text(
                   'Profile',
-                  style: textTheme.headline5,
+                  style: textTheme.headlineSmall,
                 ),
               ),
             ),
@@ -158,7 +158,7 @@ class HomePage extends HookConsumerWidget {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               selectedAccount.name,
-                              style: textTheme.headline5,
+                              style: textTheme.headlineSmall,
                             ),
                           ),
                         ),

@@ -15,16 +15,16 @@ import 'package:kitepay/provider/states.dart';
 import 'package:kitepay/network/wallet_account.dart';
 import 'package:kitepay/utilies/url_launch.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomePage extends StatefulWidget {
   final Account account;
 
-  HomeScreen(this.account);
+  HomePage(this.account);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   // Current selected
   int current = 0;
   int cardNo = 0;

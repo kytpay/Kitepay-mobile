@@ -57,7 +57,7 @@ Future<void> removeAccount(
     print('VAR1');
   } else {
     ref.read(selectedAccountProvider.notifier).state =
-        // ignore: invalid_use_of_protected_member
+        // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
         accountsProv.state.values.first;
     //accountsProv.refreshAccounts(ref.watch(networkClient.notifier).state);
     print('VAR2');

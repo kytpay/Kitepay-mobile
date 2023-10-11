@@ -4,7 +4,7 @@ import 'package:kitepay/network/network_client.dart';
 import 'package:kitepay/provider/account_manager.dart';
 import 'package:kitepay/network/base_account.dart';
 import 'package:kitepay/settings/utilities/network_selector.dart';
-import 'package:kitepay/utilies/loadstate.dart';
+import 'package:kitepay/provider/loadstate.dart';
 import 'package:kitepay/utilies/tracker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

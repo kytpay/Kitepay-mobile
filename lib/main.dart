@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kitepay/components/material_key.dart';
 import 'package:kitepay/firebase_options.dart';
-import 'package:kitepay/home/home.dart';
+import 'package:kitepay/home/base_page.dart';
 import 'package:kitepay/network/wallet_account.dart';
 import 'package:kitepay/payments/utilities/uri_pay.dart';
 import 'package:kitepay/settings/manage_accounts.dart';
@@ -40,6 +40,7 @@ Future<void> main() async {
   loggedIn = loginBox.get('loggedIn');
   print('LoggedIn: ${loginBox.get('loggedIn')}');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      // ignore: body_might_complete_normally_catch_error
       .catchError((e) {
     print(" Error : ${e.toString()}");
   });
@@ -68,7 +69,6 @@ class App extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     _handleIncomingLinks(ref);
     _handleInitialUri(ref);
 
@@ -86,7 +86,7 @@ class App extends HookConsumerWidget {
       ),
       initialRoute: loggedIn == 'true' ? '/home' : '/onboarding_page',
       routes: {
-        '/home': (_) => HomePage(),
+        '/home': (_) => BasePage(),
         '/create_wallet': (_) => CreateWallet(),
         '/import_wallet': (_) => ImportWallet(),
         '/onboarding_page': (_) => OnBoardingPage(),
