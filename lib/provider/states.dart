@@ -17,11 +17,11 @@ final isNfcEnabled = StateProvider<bool>((_) {
 });
 
 final networkClient = StateProvider<NetworkClient>((_) {
-  return NetworkClient(url: NetworkUrl.getNetworkUrl(Network.Mainnet.name));
+  return NetworkClient(url: NetworkUrl.getNetworkUrl(Network.Devnet.name));
 });
 
 final selectedNetwork = StateProvider<String>((_) {
-  return Network.Mainnet.name;
+  return Network.Devnet.name;
 });
 
 final selectedAccountProvider = StateProvider<Account?>((_) {
